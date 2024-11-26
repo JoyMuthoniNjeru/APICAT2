@@ -3,17 +3,18 @@ from django.db import models
 # Create your models here.
 
 class Customer(models.Model):
-    name = models.CharField(max_length=100)  # Customer's name
-    email = models.EmailField(unique=True)  # Customer's email
+    name = models.CharField(max_length=100)  # Name of the customer
+    email = models.EmailField(unique=True)  # Email address
     phone = models.CharField(max_length=15, blank=True, null=True)  # Optional phone number
 
     def __str__(self):
-        return self.name  # This makes the admin display the name for this model
+        return self.name  # Display the customer's name in the admin interface
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
-    order_date = models.DateTimeField(auto_now_add=True)  # Automatically sets the date when the order is created
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')  # Relationship to Customer
+    order_date = models.DateTimeField(auto_now_add=True)  # Automatically add the order creation date
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(max_length=20, default='Pending')  # Order status (e.g., Pending, Shipped)
 
     def __str__(self):
-        return f"Order {self.id} - {self.customer.name}"
+        return f"Order {self.id} - {self.customer.name}"  # Display the order ID and customer name
