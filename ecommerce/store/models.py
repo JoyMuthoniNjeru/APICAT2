@@ -11,9 +11,9 @@ class Customer(models.Model):
         return self.name  # Display the customer's name in the admin interface
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')  # Relationship to Customer
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')  # Foreign key relationship to the Customer model (one-to-many relationship)
     order_date = models.DateTimeField(auto_now_add=True)  # Automatically add the order creation date
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # The total amount for the order
     status = models.CharField(max_length=20, default='Pending')  # Order status (e.g., Pending, Shipped)
 
     def __str__(self):
